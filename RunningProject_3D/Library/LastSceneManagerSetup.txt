@@ -1,0 +1,5 @@
+sceneSetups:
+- path: Assets/Scenes/Prac_Animtaion2/RunningGame Equip.unity
+  isLoaded: 1
+  isActive: 1
+  isSubScene: 0
