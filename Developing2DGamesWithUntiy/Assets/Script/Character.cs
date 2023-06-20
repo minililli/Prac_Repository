@@ -2,10 +2,21 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-//Ä³¸¯ÅÍ°¡ °øÅëÀ¸·Î Áö³à¾ß ÇÏ´Â ±â´É°ú ¼Ó¼ºÀ» ´ãÀº Å¬·¡½º
+//ìºë¦­í„°ê°€ ê³µí†µìœ¼ë¡œ ì§€ë…€ì•¼ í•˜ëŠ” ê¸°ëŠ¥ê³¼ ì†ì„±ì„ ë‹´ì€ í´ë˜ìŠ¤
 public abstract class Character : MonoBehaviour
 {
-    //C# abstract ÇÑÁ¤ÀÚ¸¦ »ç¿ëÇØ ÀÎ½ºÅÏ½ºÈ­ ÇÒ ¼ö ¾ø´Â Å¬·¡½º°í ÇÏÀ§ Å¬·¡½º¿¡¼­ »ó¼ÓÇØ¾ßÇÏ´Â Å¬·¡½º
-    public int hitPoints;
-    public int maxHitPoints;
+    //C# abstract í•œì •ìë¥¼ ì‚¬ìš©í•´ ì¸ìŠ¤í„´ìŠ¤í™” í•  ìˆ˜ ì—†ëŠ” í´ë˜ìŠ¤ê³  í•˜ìœ„ í´ë˜ìŠ¤ì—ì„œ ìƒì†í•´ì•¼í•˜ëŠ” í´ë˜ìŠ¤
+
+    /// <summary>
+    /// í˜„ì¬ ì²´ë ¥ ê°’ ì„¤ì •
+    /// </summary>
+    public HitPoints hitPoints;
+    /// <summary>
+    /// ìµœëŒ€ì²´ë ¥ ì„¤ì •
+    /// </summary>
+    public float maxHitPoints;
+    /// <summary>
+    /// ìµœì´ˆì²´ë ¥ ì„¤ì •
+    /// </summary>
+    public float startingHitPoints;
 }

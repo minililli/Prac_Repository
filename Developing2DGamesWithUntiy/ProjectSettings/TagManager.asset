@@ -3,7 +3,8 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - CanBePickedUp
   layers:
   - Default
   - TransparentFX
@@ -11,8 +12,8 @@ TagManager:
   - 
   - Water
   - UI
-  - 
-  - 
+  - Consumables
+  - Enemies
   - 
   - 
   - 
@@ -43,6 +44,9 @@ TagManager:
     locked: 0
   - name: BackGround
     uniqueID: 4166850983
+    locked: 0
+  - name: items
+    uniqueID: 1107492413
     locked: 0
   - name: Player
     uniqueID: 2498237171
