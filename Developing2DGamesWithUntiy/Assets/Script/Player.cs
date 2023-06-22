@@ -5,11 +5,15 @@ using UnityEngine;
 public class Player : Character
 {
     public HealthBar healthBarPrefab;
-    HealthBar healthbar;
+    HealthBar healthBar;
 
     public Inventory inventoryPrefab;
     Inventory inventory;
 
+    /// <summary>
+    /// 현재 체력 값 설정
+    /// </summary>
+    public HitPoints hitPoints;
 
     public float moveSpeed = 3.0f;
     Vector2 input = new Vector2();
@@ -34,13 +38,9 @@ public class Player : Character
         anim = GetComponent<Animator>();
     }
 
-    private void Start()
+    private void OnEnable()
     {
-        healthbar = Instantiate(healthBarPrefab);
-        healthbar.character = this;
-        hitPoints.value = startingHitPoints;
-
-        inventory = Instantiate(inventoryPrefab);
+        ResetCharacter();
     }
 
     private void Update()
@@ -100,6 +100,9 @@ public class Player : Character
                     case Item.ItemType.HEALTH:
                         shouldDisappear = AdjustHitPoints(hitObject.quantity);
                         break;
+                    case Item.ItemType.FOOD:
+                        shouldDisappear = inventory.AddItem(hitObject);
+                        break;
                     default: break;
 
                 }
@@ -121,5 +124,40 @@ public class Player : Character
             return true;
         }
         return false;
+    }
+
+    public override void ResetCharacter()
+    {
+        healthBar = Instantiate(healthBarPrefab);
+        inventory = Instantiate(inventoryPrefab);
+        healthBar.character = this;
+        hitPoints.value = startingHitPoints;
+
+    }
+
+    public override IEnumerator DamageCharacter(int damage, float interval)
+    {
+        while (true)
+        {
+            hitPoints.value = hitPoints.value - damage;
+            if(hitPoints.value <= float.Epsilon)
+            {
+                KillCharacter();
+                break;
+            }
+            if (interval > float.Epsilon)
+            {
+                yield return new WaitForSeconds(interval);
+
+            }
+            else break;
+        }
+    }
+
+    public override void KillCharacter()
+    {
+        base.KillCharacter();
+        Destroy(healthBar.gameObject);
+        Destroy(inventory.gameObject);
     }
 }

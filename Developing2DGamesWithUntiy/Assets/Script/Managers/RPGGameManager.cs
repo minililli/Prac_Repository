@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class RPGGameManager : MonoBehaviour
 {
+    public SpawnPoint playerSpawnPoint;
+    public RPGCameraManager cameraManager;
+
     public static RPGGameManager sharedInstance = null;
     private void Awake()
     {
@@ -19,11 +22,20 @@ public class RPGGameManager : MonoBehaviour
 
     private void Start()
     {
-        SetUpScene();
+        SetupScene();
     }
 
-    public void SetUpScene()
+    public void SetupScene()
     {
+        SpawnPlayer();
+    }
+    public void SpawnPlayer()
+    {
+        if(playerSpawnPoint!=null)
+        {
+            GameObject player = playerSpawnPoint.SpawnObject();
 
+            cameraManager.virtualCamera.Follow = player.transform;
+        }
     }
 }

@@ -14,6 +14,7 @@ public class Item : ScriptableObject
     {
         COIN,
         HEALTH,
+        FOOD,
     }
 
     public ItemType itemType;
