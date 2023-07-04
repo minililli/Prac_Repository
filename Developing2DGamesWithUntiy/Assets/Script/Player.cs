@@ -21,6 +21,17 @@ public class Player : Character
     Rigidbody2D rigid;
 
     Animator anim;
+    string state = "animState";
+
+    enum CharStates
+    {
+        Idle = 1,
+        walkEast = 2,
+        walkWest = 3,
+        walkNorth = 4,
+        walkSouth = 5,
+
+    }
     private void Awake()
     {
         rigid = GetComponent<Rigidbody2D>();
@@ -54,17 +65,21 @@ public class Player : Character
 
     void UpdateState()
     {
-        if(Mathf.Approximately(input.x,0) && Mathf.Approximately(input.y,0))
+        if (input.x > 0)
         {
-            anim.SetBool("isWalking", false);
+            anim.SetInteger(state, (int)CharStates.walkEast);
         }
-        else
+        else if (input.x < 0)
         {
-            anim.SetBool("isWalking", true);
+            anim.SetInteger(state, (int)CharStates.walkWest);
         }
+        else if (input.y > 0)
+        {
+            anim.SetInteger(state, (int)CharStates.walkNorth);
+        }
+        else if (input.y < 0) { anim.SetInteger(state, (int)(CharStates.walkSouth)); }
 
-        anim.SetFloat("DirX", input.x);
-        anim.SetFloat("DirY", input.y);
+        else { anim.SetInteger(state, (int)CharStates.Idle); }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

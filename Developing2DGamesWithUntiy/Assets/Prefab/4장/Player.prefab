@@ -12,12 +12,11 @@ GameObject:
   - component: {fileID: 5131648889376905941}
   - component: {fileID: 5131648889376905939}
   - component: {fileID: 5131648889376905938}
-  - component: {fileID: 2556569415496112850}
   - component: {fileID: 5131648889376905937}
   - component: {fileID: 5131648889376905936}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Player
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -76,7 +75,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1796730125
-  m_SortingLayer: 4
+  m_SortingLayer: 2
   m_SortingOrder: 0
   m_Sprite: {fileID: 1245809, guid: 239bae2aa9938d24b929c532479f864e, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -122,27 +121,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bc4b64a0bf3fbef45ba87b0a2fbb5691, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHitPoints: 5
-  startingHitPoints: 10
-  healthBarPrefab: {fileID: 4368157091368931532, guid: f4922f7970a743c4c9e11a316011f57c, type: 3}
-  inventoryPrefab: {fileID: 5713239181923607609, guid: 8dcadce38353095498e36c9cba92d1e5, type: 3}
-  hitPoints: {fileID: 11400000, guid: 292568bfbfc4b8448aa9de4f9e8bf535, type: 2}
   moveSpeed: 3
---- !u!114 &2556569415496112850
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5131648889376905942}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dfd7c7c7dad3ede45abfff5cbf4b3ea6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ammoPrefab: {fileID: 8718764356030987455, guid: 4a63c119f6871d1439f174e4c84b71bb, type: 3}
-  poolsize: 32
-  weaponVelocity: 0.5
 --- !u!50 &5131648889376905937
 Rigidbody2D:
   serializedVersion: 4
