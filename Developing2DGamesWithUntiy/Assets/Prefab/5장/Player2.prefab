@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 3594696839103267695}
   - component: {fileID: 3594696839103267694}
   - component: {fileID: 1690555529}
+  - component: {fileID: 1726342085365179926}
   m_Layer: 0
   m_Name: Player2
   m_TagString: Player
@@ -75,7 +76,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1796730125
-  m_SortingLayer: 3
+  m_SortingLayer: 4
   m_SortingOrder: 1
   m_Sprite: {fileID: 1245809, guid: 239bae2aa9938d24b929c532479f864e, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -168,9 +169,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bc4b64a0bf3fbef45ba87b0a2fbb5691, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hitPoints: {fileID: 11400000, guid: 292568bfbfc4b8448aa9de4f9e8bf535, type: 2}
   maxHitPoints: 10
   startingHitPoints: 5
   healthBarPrefab: {fileID: 4368157091368931532, guid: f4922f7970a743c4c9e11a316011f57c, type: 3}
   inventoryPrefab: {fileID: 5713239181923607609, guid: 8dcadce38353095498e36c9cba92d1e5, type: 3}
+  hitPoints: {fileID: 11400000, guid: 292568bfbfc4b8448aa9de4f9e8bf535, type: 2}
   moveSpeed: 3
+--- !u!114 &1726342085365179926
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3594696839103267688}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dfd7c7c7dad3ede45abfff5cbf4b3ea6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ammoPrefab: {fileID: 8718764356030987455, guid: 4a63c119f6871d1439f174e4c84b71bb, type: 3}
+  poolsize: 7
+  weaponVelocity: 2
