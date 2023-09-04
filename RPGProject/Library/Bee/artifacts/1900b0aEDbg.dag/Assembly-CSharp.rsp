@@ -347,9 +347,16 @@
 -r:"Library/Bee/artifacts/1900b0aEDbg.dag/UnityEngine.UI.ref.dll"
 "Assets/PlayersInputActions/PlayerInputActions.cs"
 "Assets/Scripts/En_Chest.cs"
+"Assets/Scripts/managers/GameManager.cs"
+"Assets/Scripts/managers/MapManager.cs"
+"Assets/Scripts/managers/MapModuleBase.cs"
+"Assets/Scripts/Map/MapModule.cs"
+"Assets/Scripts/Player.cs"
 "Assets/Scripts/PlayerController.cs"
 "Assets/Scripts/Test/Test_Base.cs"
 "Assets/Scripts/Test/Test_Environment.cs"
+"Assets/Scripts/VirtualButtons/VirtualButton.cs"
+"Assets/Scripts/VirtualButtons/VirtualStick.cs"
 -langversion:9.0
 
 /deterministic

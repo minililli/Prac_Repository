@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using System;
-using Unity.VisualScripting.FullSerializer;
+
 
 public class PlayerController : MonoBehaviour
 {
@@ -15,7 +15,7 @@ public class PlayerController : MonoBehaviour
     public float moveSpeed = 2f;
     public float runningSpeed = 4f;
     public float rotateSpeed = 180f;
-    public float jumpForce = 5f;
+    public float jumpForce = 1f;
 
 
     float moveDir;
@@ -26,8 +26,8 @@ public class PlayerController : MonoBehaviour
     {
         get
         {
-            if (bMove && bRun && moveDir>0) currentSpeed = runningSpeed;
-            else if (bMove && !bRun || bMove&&bRun&&moveDir<0) currentSpeed = moveSpeed;
+            if (bMove && bRun && moveDir > 0) currentSpeed = runningSpeed;
+            else if (bMove && !bRun || bMove && bRun && moveDir < 0) currentSpeed = moveSpeed;
             else currentSpeed = 0;
             return currentSpeed;
         }
@@ -51,7 +51,7 @@ public class PlayerController : MonoBehaviour
     {
         inputActions.Player.Enable();
         inputActions.Player.Move.performed += InputMove;
-        inputActions.Player.Move.canceled += InputStop;
+        inputActions.Player.Move.canceled += InputMove;
         inputActions.Player.Jump.performed += InputJump;
         inputActions.Player.Run.performed += InputRun;
         inputActions.Player.Interaction.performed += InputInteraction;
@@ -61,7 +61,7 @@ public class PlayerController : MonoBehaviour
         inputActions.Player.Skill.performed += InputSkill;
     }
 
-   
+
     private void OnDisable()
     {
         inputActions.Player.Skill.performed -= InputSkill;
@@ -71,7 +71,7 @@ public class PlayerController : MonoBehaviour
         inputActions.Player.Interaction.performed += InputInteraction;
         inputActions.Player.Run.performed -= InputRun;
         inputActions.Player.Jump.performed -= InputJump;
-        inputActions.Player.Move.canceled -= InputStop;
+        inputActions.Player.Move.canceled -= InputMove;
         inputActions.Player.Move.performed -= InputMove;
         inputActions.Player.Disable();
     }
@@ -79,6 +79,20 @@ public class PlayerController : MonoBehaviour
     private void Start()
     {
         ResetStartState();
+        // 가상 스틱 연결
+        VirtualStick stick = FindObjectOfType<VirtualStick>();
+        if (stick != null)
+        {
+            stick.onMoveInput += (input) => SetInput(input, input != Vector2.zero); // 가상 스틱의 입력이 있으면 이동 처리
+        }
+
+        // 가상 버튼 연결
+        VirtualButton button = FindObjectOfType<VirtualButton>();
+        if (button != null)
+        {
+            button.onClick += Jump;
+            //onJumpCoolTimeChange += button.RefreshCoolTime;     // 점프 쿨타임이 변하면 버튼의 쿨타임 표시 변경
+        }
     }
 
     void ResetStartState()
@@ -93,11 +107,39 @@ public class PlayerController : MonoBehaviour
     private void InputMove(InputAction.CallbackContext context)
     {
         Vector2 inputDir = context.ReadValue<Vector2>();
+
+        if (context.canceled)
+        {
+            bMove = false;
+            moveDir = 0;
+            rotateDir = 0;
+            anim.SetBool("bmove", false);
+            anim.SetFloat("moveSpeed", 0);
+        }
+        else
+        {
+            bMove = true;
+            SetInput(inputDir, bMove);
+        }
+
+    }
+    /// <summary>
+    /// 입력에 따라 이동 처리용 변수에 값을 설정하는 함수
+    /// </summary>
+    /// <param name="input">이동 방향</param>
+    /// <param name="isMove">이동 중인지 아닌지(true면 이동중, false면 정지 중)</param>
+    private void SetInput(Vector2 inputDir, bool isMove)
+    {
         moveDir = inputDir.y;
         rotateDir = inputDir.x;
-        bMove = true;
-        anim.SetBool("bmove", bMove);
-        anim.SetFloat("moveSpeed", CurrentSpeed);
+
+            if (!bCrouch)
+            {
+                if (inputDir != Vector2.zero) bMove = true;
+                else bMove = false;
+            }
+            anim.SetBool("bmove", bMove);
+            anim.SetFloat("moveSpeed", CurrentSpeed);   
     }
     private void FixedUpdate()
     {
@@ -108,15 +150,8 @@ public class PlayerController : MonoBehaviour
     {
         rigid.MovePosition(transform.position + Time.fixedDeltaTime * moveDir * CurrentSpeed * transform.forward);
     }
-    private void InputStop(InputAction.CallbackContext _)
-    {
-        moveDir = 0;
-        rotateDir = 0;
-        bMove = false;
-        anim.SetBool("bmove", false);
-        anim.SetFloat("moveSpeed", 0);
-    }
-  
+
+
     private void Rotate()
     {
         Quaternion rotate = Quaternion.AngleAxis(Time.deltaTime * rotateDir * rotateSpeed, transform.up);
@@ -125,11 +160,17 @@ public class PlayerController : MonoBehaviour
 
     private void InputJump(InputAction.CallbackContext _)
     {
+
+        Jump();
+
+    }
+
+    void Jump()
+    {
         if (!bJump)
         {
             bJump = true;
-            if (bMove) anim.SetTrigger("tjump");
-            else anim.SetBool("bjump", true);
+            anim.SetTrigger("tjump");
             rigid.AddForce(jumpForce * transform.up, ForceMode.Impulse);
         }
     }
@@ -139,7 +180,6 @@ public class PlayerController : MonoBehaviour
         if (collision.gameObject.CompareTag("Land"))
         {
             bJump = false;
-            if (!bMove) anim.SetBool("bjump", false);
         }
     }
 
@@ -157,18 +197,15 @@ public class PlayerController : MonoBehaviour
             Debug.Log("crouch");
             anim.SetLayerWeight(2, 1);
             bMove = false;
-            bCrouch = true;
         }
-        else
-        {
-            bCrouch = false;
-        }
+        else bMove = true;
+
         anim.SetBool("bcrouch", bCrouch);
     }
     /// <summary>
-    /// ��ȣ�ۿ� �Լ�
+    /// 상호작용 함수
     /// </summary>
-    /// <param name="_">Ű���� FŰ</param>
+    /// <param name="_">키보드 F키</param>
     private void InputInteraction(InputAction.CallbackContext _)
     {
         Debug.Log("interaction(F)");
@@ -190,6 +227,7 @@ public class PlayerController : MonoBehaviour
     private void InputSkill(InputAction.CallbackContext _)
     {
         bAttack = true;
+
     }
 
 
