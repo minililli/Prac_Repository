@@ -1545,7 +1545,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1471120194, guid: 940be87ff2471fd4b8de282b17d7d8cf, type: 3}
       propertyPath: jumpForce
-      value: 1
+      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 940be87ff2471fd4b8de282b17d7d8cf, type: 3}
@@ -1731,7 +1731,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1568242081
 MonoBehaviour:
   m_ObjectHideFlags: 0
